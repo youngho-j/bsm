@@ -6,7 +6,7 @@ router.get("/myPage", (req, res) => {
 });
 
 router.get("/login", (req, res) => {
-    res.sender("로그인페이지");
+    res.render("login")
 });
 
 router.post("/login", (req, res) => {
