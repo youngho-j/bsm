@@ -19,8 +19,9 @@ app.use(express.urlencoded({
 }));
 
 // 아래 경로가 포함된 요청이 있을 경우 해당 js파일로 라우팅(전달) 됨
-app.use("/nft", require("./routes/mint.js"));
+app.use("/nft", require("./routes/nft.js"));
 app.use("/user", require("./routes/user.js"));
+app.use("/contact", require("./routes/contact.js"));
 
 // 서버 로딩후 가장 처음 보여주는 페이지
 app.get("/", (req, res) => {

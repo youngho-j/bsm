@@ -18,8 +18,14 @@ router.get("/buy", (req, res) => {
     res.sender("nft 곡 구매 페이지 - modal");
 });
 
+// nft 목록 페이지 이동
+router.get("/list", (req, res) => {
+    res.render("list");
+});
+
 // nft 민팅 정보 설정값 DB 저장
 router.post("/mint", (req, res) => {
+    
     let title = req.body.title;
     let artist = req.body.artist;
     let gene = req.body.gene;

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Flowers Shop Ecommerce Website</title>
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+        <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+        <link href="https://demos.creative-tim.com/soft-ui-design-system/assets/css/nucleo-icons.css" rel="stylesheet" />
+        <link href="https://demos.creative-tim.com/soft-ui-design-system/assets/css/nucleo-svg.css" rel="stylesheet" />
+        <link rel="stylesheet" href="../css/theme.css">
+        <link rel="stylesheet" href="../css/loopple/loopple.css">
+    </head>
+    <body>
+        <!-- top nav / 로고, 페이지 이동 버튼 / 검색, 마이페이지 아이콘 / 로그인 버튼-->
+        <%- include('./common/topNav.ejs')%>
+        <section class="">
+            <div class="page-header min-vh-100">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column mx-auto">
+                            <div class="card card-plain">
+                                <div class="card-header pb-0 text-left bg-transparent">
+                                    <h4 class="font-weight-bolder">NFT Sell</h4>
+                                    <p class="mb-0">Enter your NFT sales information</p>
+                                </div>
+                                <div class="card-body pb-3">
+                                    <form method="post" action="https://script.google.com/macros/s/AKfycbyAmdSzelN6cR1lTMzrGbN0rT9oRBDBwBX5h4La6LWUp9tOPELumJPoSTlFw1RDa7K3/exec">
+                                        <label>이름</label>
+                                        <div class="mb-3">
+                                            <input type="text" class="form-control" name="name" placeholder="이름을 입력해주세요." aria-label="이름">
+                                        </div>
+                                        <label>이메일</label>
+                                        <div class="mb-3">
+                                            <input type="email" class="form-control" placeholder="이메일을 입력해주세요." aria-label="이메일">
+                                        </div>
+                                        <label>문의내용</label>
+                                        <div class="mb-3">
+                                            <textarea class="form-control" row="5" id="comment" placeholder="문의내용을 입력해주세요."></textarea>
+                                        </div>
+                                        <div class="text-center">
+                                            <button type="button" class="btn bg-gradient-info w-100 mt-4 mb-0">문의하기</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- footer 관련 페이지 / 각종 커뮤니티 아이콘  / 회사정보 / 페이지 / 팀 구성 / 자원 정보 등 -->
+        <%- include('./common/footer')%>
+    </body>
+</html>

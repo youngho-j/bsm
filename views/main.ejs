@@ -13,6 +13,11 @@
     <link href="https://demos.creative-tim.com/soft-ui-design-system/assets/css/nucleo-svg.css" rel="stylesheet" />
     <link rel="stylesheet" href="../css/theme.css">
     <link rel="stylesheet" href="../css/loopple/loopple.css">
+    <script>
+        function goListpage(){
+            location.href="/nft/list"
+        }
+    </script>
 </head>
 
 <body>
@@ -31,7 +36,7 @@
                         <p class="text-dark mb-0">Buy your first Music NFT purchase</p>
                         <p class="text-dark font-weight-bolder text-lg"> in BSM</p>
                         <!-- 전체 판매목록으로 이동 버튼 -->
-                        <button type="submit" class="btn bg-gradient-primary mt-3 mb-0">Buy now</button>
+                        <button type="button" onclick="goListpage()" class="btn bg-gradient-primary mt-3 mb-0">Buy now</button>
                     </div>
                     <!-- 메인 헤더 사진-->
                     <div class="col-lg-6">
@@ -215,7 +220,7 @@
                     </div>
                 </div>
                 <div class="col-12 mt-5 text-center">
-                    <a href="javascript" class="btn bg-gradient-dark">View All</a>
+                    <a href="/nft/list" class="btn bg-gradient-dark">View All</a>
                 </div>
             </div>
         </div>
