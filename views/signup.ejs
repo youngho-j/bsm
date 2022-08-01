@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Flowers Shop Ecommerce Website</title>
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+        <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+        <link href="https://demos.creative-tim.com/soft-ui-design-system/assets/css/nucleo-icons.css" rel="stylesheet" />
+        <link href="https://demos.creative-tim.com/soft-ui-design-system/assets/css/nucleo-svg.css" rel="stylesheet" />
+        <link rel="stylesheet" href="../css/theme.css">
+        <link rel="stylesheet" href="../css/loopple/loopple.css">
+    </head>
+    <body>
+        <!-- top nav / 로고, 페이지 이동 버튼 / 검색, 마이페이지 아이콘 / 로그인 버튼-->
+        <%- include('./common/topNav.ejs')%>
+        <!-- 메인 사진 및 우리 사업 장점-->
+        <section class="">
+            <div class="page-header min-vh-100">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column mx-lg-0 mx-auto">
+                            <div class="card card-plain">
+                                <div class="card-header pb-0 text-left bg-transparent">
+                                    <h4 class="font-weight-bolder">Sign In</h4>
+                                    <p class="mb-0">Enter your email and password to sign in</p>
+                                </div>
+                                <div class="card-body pb-3">
+                                    <form>
+                                        <label>Email</label>
+                                        <div class="mb-3">
+                                            <input type="email" class="form-control" placeholder="Email" aria-label="Email">
+                                        </div>
+                                        <label>Password</label>
+                                        <div class="mb-3">
+                                            <input type="password" class="form-control" placeholder="Password" aria-label="Password">
+                                        </div>
+                                        <!-- kas 계좌 생성 필요 -->
+                                        <div class="form-check form-check-info text-left">
+                                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked="">
+                                            <label class="form-check-label" for="flexCheckDefault">
+                                                I agree the <a href="javascript:void(0);" class="text-dark font-weight-bolder">Terms and Conditions</a>
+                                            </label>
+                                        </div>
+                                        <div class="text-center">
+                                            <button type="button" class="btn bg-gradient-info w-100 mt-4 mb-0">Sign up</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- 회원가입 버튼 하단 로그인 -->
+                                <div class="card-footer text-center pt-0 px-lg-2 px-1">
+                                    <p class="mb-4 text-sm mx-auto">
+                                        Already have an account?
+                                        <a href="javascript:;" class="text-primary text-gradient font-weight-bold">Sign up</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="col-3 d-lg-flex d-none h-100 my-auto pe-0 position-absolute top-0 end-0 text-center flex-column"> -->
+                        <div class="col-7 d-lg-flex d-none h-100 my-auto pe-0 position-relative text-center flex-column">
+                            <div class="position-relative mask bg-gradient-info h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center">
+                                <img src="https://demos.creative-tim.com/soft-ui-design-system/assets/img/shapes/pattern-lines.svg" 
+                                    alt="pattern-lines" 
+                                    class="position-absolute opacity-4 start-0">
+                                <div class="position-relative">
+                                    <img class="max-width-500 w-100 position-relative z-index-2" src="https://demos.creative-tim.com/soft-ui-design-system-pro/assets/img/illustrations/rocket-white.png">
+                                </div>
+                                <h4 class="text-white font-weight-bolder">"Attention is the new currency"</h4>
+                                <p class="text-white">The more effortless the writing looks, the more effort the writer actually put into the process.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- footer 관련 페이지 / 각종 커뮤니티 아이콘  / 회사정보 / 페이지 / 팀 구성 / 자원 정보 등 -->
+        <%- include('./common/footer')%>
+    </body>
+</html>

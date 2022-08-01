@@ -1,12 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <p>민팅 데이터 입력 페이지</p>
-</body>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Flowers Shop Ecommerce Website</title>
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+        <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+        <link href="https://demos.creative-tim.com/soft-ui-design-system/assets/css/nucleo-icons.css" rel="stylesheet" />
+        <link href="https://demos.creative-tim.com/soft-ui-design-system/assets/css/nucleo-svg.css" rel="stylesheet" />
+        <link rel="stylesheet" href="../css/theme.css">
+        <link rel="stylesheet" href="../css/loopple/loopple.css">
+    </head>
+    <body>
+        <!-- top nav / 로고, 페이지 이동 버튼 / 검색, 마이페이지 아이콘 / 로그인 버튼-->
+        <%- include('./common/topNav.ejs')%>
+        <!-- 메인 사진 및 우리 사업 장점-->
+        <section class="">
+            <div class="page-header min-vh-100">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column mx-auto">
+                            <div class="card card-plain">
+                                <div class="card-header pb-0 text-left bg-transparent">
+                                    <h4 class="font-weight-bolder">NFT Sell</h4>
+                                    <p class="mb-0">Enter your NFT sales information</p>
+                                </div>
+                                <div class="card-body pb-3">
+                                    <form>
+                                        <!-- nft 정보를 어떻게 할지 추가? -->
+                                        <label>
+                                            NFT 판매 수량 &nbsp;
+                                            <output id="amount" name="amount" for="rangeInput"></output>
+                                        </label>
+                                        <!-- 범위를 해당 계좌에 가지고 있는 만큼만 설정되도록 해야함 / max 값을 받아와야함-->
+                                        <div class="mb-3">
+                                            <input type="range" id="rangeInput" class="form-range" min="1" max="10000" oninput="amount.value=rangeInput.value">
+                                        </div>
+                                        <label>판매 가격 설정</label>
+                                        <div class="mb-3">
+                                            <input type="number" class="form-control" placeholder="판매 가격 입력" aria-label="가격">
+                                        </div>
+                                        <label>수수료</label>
+                                        <div class="mb-3">
+                                            <input type="text" class="form-control" placeholder="아티스트 명" aria-label="수수료" value="2.5 %" disabled>
+                                        </div>
+                                        <div class="text-center">
+                                            <button type="button" class="btn bg-gradient-info w-100 mt-4 mb-0">Selling</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- footer 관련 페이지 / 각종 커뮤니티 아이콘  / 회사정보 / 페이지 / 팀 구성 / 자원 정보 등 -->
+        <%- include('./common/footer')%>
+    </body>
 </html>
