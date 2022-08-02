@@ -31,10 +31,12 @@ router.post("/mint", (req, res) => {
     let gene = req.body.gene;
     let amount = req.body.amount;
     let fee = req.body.fee;
+    let imgUrl = req.body.imgUrl;
+    let musicUrl = req.body.musicUrl;
 
     conn.query(
-        `insert into nft(title, artist, gene, amount, fee) values(?,?,?,?,?)`,
-        [title, artist, gene, amount, fee],
+        `insert into nft(title, artist, gene, amount, fee, imgUrl, musicUrl) values(?,?,?,?,?,?,?)`,
+        [title, artist, gene, amount, fee, imgUrl, musicUrl],
         (err) => {
             if(err) {
                 console.log(err);
