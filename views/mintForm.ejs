@@ -12,49 +12,6 @@
         <link rel="stylesheet" href="../css/loopple/loopple.css">
         <!-- 환경변수 관리 파일 -->
         <script src="../js/env.js"></script>
-        <script>
-            // aws 파일 업로드 및 출력 예제
-            function upload(files) {
-                const awsBucketUrl = window.env.awsBucketUrl;
-                
-                // 파일 
-                const file = files[0];
-                
-                // 간단하게 해쉬값 출력
-                const hash = (Math.random()).toString(32).split('.').pop();
-
-                console.log(files[0]);
-                
-                // DOM 객체를 변수에 할당시 관례
-                let $albumDom;
-                let $urlDom;
-
-                console.log(file.type.indexOf('image'));
-
-                if(file.type.indexOf('image') != -1) {
-                    $albumDom = document.querySelector('#album-cover');
-                    $urlDom = document.querySelector('#imgUrl');
-                } else {
-                    $albumDom = document.querySelector('#album-music');
-                    $urlDom = document.querySelector('#musicUrl');
-                }
-                // fetch : 원격 API 호출
-                fetch(`${awsBucketUrl}/${hash}_${file.name}`, {
-                    method : "PUT",
-                    headers : {
-                        "Content-Type" : file.type,
-                    },
-                    body : file
-                }).catch((err) => {
-                    console.log("원격 호출 에러 : " + err)
-                    $albumDom.style.display = 'none';
-                }).then(() => {
-                    $albumDom.style.display = '';
-                    $albumDom.src = `${awsBucketUrl}/${hash}_${file.name}`;
-                    $urlDom.value = `${awsBucketUrl}/${hash}_${file.name}`;
-                })
-            }
-        </script>
     </head>
     <body>
         <!-- top nav / 로고, 페이지 이동 버튼 / 검색, 마이페이지 아이콘 / 로그인 버튼-->
@@ -74,24 +31,24 @@
                                     <form action="/nft/mint" method="post" >
                                         <label>곡 이름</label>
                                         <div class="mb-3">
-                                            <input type="text" class="form-control" placeholder="곡 이름 작성" aria-label="곡 이름" name="title">
+                                            <input type="text" class="form-control" placeholder="곡 이름 작성" aria-label="곡 이름" name="_title">
                                         </div>
                                         <!-- 이미지 업로드 후 input tag에 경로 추가해줘야함 / 파일 제한걸기 -->
                                         <label>이미지 파일</label>
                                         <div class="mb-3">
                                             <input type="file" class="form-control form-control-sm" onchange="upload(this.files)">
-                                            <input type="hidden" name="imgUrl" id="imgUrl">
+                                            <input type="hidden" name="_imgUrl" id="imgUrl">
                                         </div>
                                         <div class="mb-3">
                                             <img id="album-cover" class="form-control form-control-sm" style="display: none;"/>
                                         </div>
                                         <label>Artist</label>
                                         <div class="mb-3">
-                                            <input type="text" class="form-control" placeholder="아티스트 명" aria-label="Artist" name="artist">
+                                            <input type="text" class="form-control" placeholder="아티스트 명" aria-label="Artist" name="_artist">
                                         </div>
                                         <label>장르</label>
                                         <div class="mb-3">
-                                            <select class="form-select" aria-label="장르" name="gene">
+                                            <select class="form-select" aria-label="장르" name="_genre">
                                                 <option selected>장르를 선택하세요.</option>
                                                 <option value="1">R&B</option>
                                                 <option value="2">힙합</option>
@@ -105,16 +62,16 @@
                                         </label>
                                         <div class="mb-3">
                                             <input type="range" id="rangeInput" class="form-range" min="1" max="10" 
-                                            oninput="show.value=rangeInput.value" name="amount">
+                                            oninput="show.value=rangeInput.value" name="_amount">
                                         </div>
                                         <label>수수료</label>
                                         <div class="mb-3">
-                                            <input type="text" class="form-control" placeholder="아티스트 명" aria-label="수수료" value="2.5" name="fee" readonly>
+                                            <input type="text" class="form-control" placeholder="아티스트 명" aria-label="수수료" value="2.5" name="_fee" readonly>
                                         </div>
                                         <label>음원 파일</label>
                                         <div class="mb-3">
                                             <input class="form-control form-control-sm" type="file" onchange="upload(this.files)">
-                                            <input type="hidden" name="musicUrl" id="musicUrl">
+                                            <input type="hidden" name="_musicUrl" id="musicUrl">
                                         </div>
                                         <div class="mb-3">
                                             <audio id="album-music" class="form-control form-control-sm" 
@@ -134,4 +91,47 @@
         <!-- footer 관련 페이지 / 각종 커뮤니티 아이콘  / 회사정보 / 페이지 / 팀 구성 / 자원 정보 등 -->
         <%- include('./common/footer')%>
     </body>
+    <script>
+        // aws 파일 업로드 및 출력 예제
+        function upload(files) {
+            const awsBucketUrl = window.env.awsBucketUrl;
+            
+            // 파일 
+            const file = files[0];
+            
+            // 간단하게 해쉬값 출력
+            const hash = (Math.random()).toString(32).split('.').pop();
+
+            console.log(files[0]);
+            
+            // DOM 객체를 변수에 할당시 관례
+            let $albumDom;
+            let $urlDom;
+
+            console.log(file.type.indexOf('image'));
+
+            if(file.type.indexOf('image') != -1) {
+                $albumDom = document.querySelector('#album-cover');
+                $urlDom = document.querySelector('#imgUrl');
+            } else {
+                $albumDom = document.querySelector('#album-music');
+                $urlDom = document.querySelector('#musicUrl');
+            }
+            // fetch : 원격 API 호출
+            fetch(`${awsBucketUrl}/${hash}_${file.name}`, {
+                method : "PUT",
+                headers : {
+                    "Content-Type" : file.type,
+                },
+                body : file
+            }).catch((err) => {
+                console.log("원격 호출 에러 : " + err)
+                $albumDom.style.display = 'none';
+            }).then(() => {
+                $albumDom.style.display = '';
+                $albumDom.src = `${awsBucketUrl}/${hash}_${file.name}`;
+                $urlDom.value = `${awsBucketUrl}/${hash}_${file.name}`;
+            })
+        }
+    </script>
 </html>

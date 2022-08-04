@@ -95,6 +95,7 @@
                 throw new TypeError("JSON 없음!");
             })
             .then((json) => {
+                // NFT를 마켓에 올리기 위해 필요한 값을 다 가져와야함
                 $walletAddress.value = json.address;
                 $walletAddress.readOnly = true;
                 $signup.style.display = "";
