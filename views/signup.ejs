@@ -88,10 +88,11 @@
             //alert("확인");
             fetch(`/user/getWalletAddress`).then((data) => {
                 const contentType = data.headers.get("content-type");
-                console.log(contentType);
+                
                 if(contentType && contentType.includes("application/json")) {
                     return data.json(); 
                 }
+                
                 throw new TypeError("JSON 없음!");
             })
             .then((json) => {

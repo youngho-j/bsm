@@ -12,7 +12,7 @@
         <link rel="stylesheet" href="../css/theme.css">
         <link rel="stylesheet" href="../css/loopple/loopple.css">
     </head>
-
+    <!-- data가 Object 타입으로 리턴.. JSON.stringify 사용시 문자열로 보여짐 / 아니면 for 문 사용할 것-->
     <body>
         <!-- top nav / 로고, 페이지 이동 버튼 / 검색, 마이페이지 아이콘 / 로그인 버튼-->
         <%- include('./common/topNav.ejs')%>
@@ -25,130 +25,47 @@
                     <div class="col-12 text-center">
                         <h3 class="mb-5" spellcheck="false">My NFT</h3>
                     </div>
+                    <!-- 상품 카드 -->
+                    <% for(let i in data.items){ %>
                     <div class="col-lg-3 mb-lg-0 mb-4">
-                        <div class="card">
+                        <div class="card border-dark">
+                            <!-- 카드 이미지 영역-->
                             <div class="card-header p-0 mx-3 mt-3 position-relative z-index-1">
-                                <a href="javascript:;" class="d-block">
-                                    <img src="https://images.unsplash.com/photo-1548460464-2a68877c7a5f?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cm9zZXxlbnwwfDJ8MHx8&amp;auto=format&amp;fit=crop&amp;w=800&amp;q=60" class="img-fluid border-radius-lg shadow">
+                                <a href="javascript:;" class="d-block">               
+                                    <!-- <img src="https://images.unsplash.com/photo-1548460464-2a68877c7a5f?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cm9zZXxlbnwwfDJ8MHx8&amp;auto=format&amp;fit=crop&amp;w=800&amp;q=60" class="img-fluid border-radius-lg shadow"> -->
+                                    <img src="<%=data.items[i].image%>" class="img-fluid border-radius-lg shadow" style="object-fit: cover;">
                                 </a>
                             </div>
-
+                            <!-- 카드 내용 영역-->
                             <div class="card-body pt-3">
-                                <div class="d-flex align-items-center">
-                                    <div>
-                                        <span class="text-sm">Flower</span>
-                                        <h4 class="card-description font-weight-bolder text-dark mb-4">
-                                            Rose
+                                <div class="d-flex align-items-center" style="width: 100%; display: block;">
+                                    <div style="flex: 1;">
+                                        <div style="display: flex; justify-content: space-between;">
+                                            <span class="card-subtitle"><%=data.items[i].attributes[1].value%></span>
+                                            <span class="card-subtitle"><%=data.items[i].attributes[0].value%></span>
+                                        </div>
+                                        <h4 class="card-title font-weight-bolder text-dark mb-4">
+                                            <%=data.items[i].name%>
                                         </h4>
-                                    </div>
-                                    <div class="ms-auto">
-                                        <a href="javascript:;" class="btn btn-link text-dark p-0">
-                                            <i class="fa fa-star text-lg" aria-hidden="true"></i>
-                                        </a>
                                     </div>
                                 </div>
                                 <div class="d-flex align-items-center mb-3">
                                     <h5 class="mb-0 font-weight-bolder">$25.40</h5>
                                     <h5 class="mb-0 opacity-4 text-sm ms-2"><strike>$29.00</strike></h5>
                                 </div>
-                                <a href="javascript:;" class="btn btn-outline-dark mb-0">Add to cart</a>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 mb-lg-0 mb-4">
-                        <div class="card">
-                            <div class="card-header p-0 mx-3 mt-3 position-relative z-index-1">
-                                <a href="javascript:;" class="d-block">
-                                    <img src="https://images.unsplash.com/photo-1528475563668-e15742001b92?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=3280&amp;q=80" class="img-fluid border-radius-lg shadow">
-                                </a>
-                            </div>
-
-                            <div class="card-body pt-3">
-                                <div class="d-flex align-items-center">
-                                    <div>
-                                        <span class="text-sm">Flower</span>
-                                        <h4 class="card-description font-weight-bolder text-dark mb-4">
-                                            Cactus</h4>
-                                    </div>
-                                    <div class="ms-auto">
-                                        <a href="javascript:;" class="btn btn-link text-dark p-0">
-                                            <i class="fa fa-star text-lg" aria-hidden="true"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="d-flex align-items-center mb-3">
-                                    <h5 class="mb-0 font-weight-bolder">$19.00</h5>
-                                    <h5 class="mb-0 opacity-4 text-sm ms-2"><strike>$29.00</strike></h5>
-                                </div>
                                 <a href="javascript:;" class="btn btn-outline-dark mb-0">Sell</a>
-                                <a href="javascript:;" class="btn btn-outline-dark mb-0">Transfer</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 mb-lg-0 mb-4">
-                        <div class="card">
-                            <div class="card-header p-0 mx-3 mt-3 position-relative z-index-1">
-                                <a href="javascript:;" class="d-block">
-                                    <img src="https://images.unsplash.com/photo-1589292514550-ffa367e28682?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxzZWFyY2h8MzN8fHR1bGlwfGVufDB8MnwwfHw%3D&amp;auto=format&amp;fit=crop&amp;w=800&amp;q=60" class="img-fluid border-radius-lg shadow">
-                                </a>
-                            </div>
-
-                            <div class="card-body pt-3">
-                                <div class="d-flex align-items-center">
-                                    <div>
-                                        <span class="text-sm">Flower</span>
-                                        <h4 class="card-description font-weight-bolder text-dark mb-4">
-                                            Tulip</h4>
-                                    </div>
-                                    <div class="ms-auto">
-                                        <a href="javascript:;" class="btn btn-link text-dark p-0">
-                                            <i class="fa fa-star text-lg" aria-hidden="true"></i>
-                                        </a>
-                                    </div>
-                                </div>
                                 <div class="d-flex align-items-center mb-3">
-                                    <h5 class="mb-0 font-weight-bolder">$9.90</h5>
-                                    <h5 class="mb-0 opacity-4 text-sm ms-2"><strike>$15.00</strike></h5>
+                                    <span class="text-sm">
+                                        <%=data.items[i].description%>
+                                    </span>
                                 </div>
-                                <a href="javascript:;" class="btn btn-outline-dark mb-0">Add to cart</a>
-
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-3 mb-lg-0 mb-4">
-                        <div class="card">
-                            <div class="card-header p-0 mx-3 mt-3 position-relative z-index-1">
-                                <a href="javascript:;" class="d-block">
-                                    <img src="https://images.unsplash.com/photo-1502977249166-824b3a8a4d6d?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1180&amp;q=80" class="img-fluid border-radius-lg shadow">
-                                </a>
-                            </div>
-
-                            <div class="card-body pt-3">
-                                <div class="d-flex align-items-center">
-                                    <div>
-                                        <span class="text-sm">Flower</span>
-                                        <h4 class="card-description font-weight-bolder text-dark mb-4">
-                                            Lily</h4>
-                                    </div>
-                                    <div class="ms-auto">
-                                        <a href="javascript:;" class="btn btn-link text-dark p-0">
-                                            <i class="fa fa-star text-lg" aria-hidden="true"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="d-flex align-items-center mb-3">
-                                    <h5 class="mb-0 font-weight-bolder">$39.20</h5>
-                                    <h5 class="mb-0 opacity-4 text-sm ms-2"><strike>$59.00</strike></h5>
-                                </div>
-                                <a href="javascript:;" class="btn btn-outline-dark mb-0">Add to cart</a>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 mt-5 text-center">
+                    <% } %>
+                    <!-- <div class="col-12 mt-5 text-center">
                         <a href="javascript" class="btn bg-gradient-dark">View All</a>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </section>
