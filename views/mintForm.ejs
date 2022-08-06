@@ -42,26 +42,27 @@
                                         <div class="mb-3">
                                             <img id="album-cover" class="form-control form-control-sm" style="display: none;"/>
                                         </div>
-                                        <label>Artist</label>
+                                        <label>가수</label>
                                         <div class="mb-3">
-                                            <input type="text" class="form-control" placeholder="아티스트 명" aria-label="Artist" name="_artist">
+                                            <input type="text" class="form-control" placeholder="가수 명" aria-label="Artist" name="_artist">
                                         </div>
                                         <label>장르</label>
                                         <div class="mb-3">
                                             <select class="form-select" aria-label="장르" name="_genre">
                                                 <option selected>장르를 선택하세요.</option>
-                                                <option value="1">R&B</option>
-                                                <option value="2">힙합</option>
-                                                <option value="3">Rock</option>
-                                                <option value="4">발라드</option>
+                                                <option value="R&B">R&B</option>
+                                                <option value="힙합">힙합</option>
+                                                <option value="Rock">Rock</option>
+                                                <option value="발라드">발라드</option>
                                             </select>
                                         </div>
                                         <label>
                                             NFT 발행 수량 &nbsp;
                                             <output id="show" for="rangeInput"></output>
                                         </label>
+                                        <!-- 나중에 초기 값이 로드시 보이도록 설정하기 -->
                                         <div class="mb-3">
-                                            <input type="range" id="rangeInput" class="form-range" min="1" max="10" 
+                                            <input type="range" id="rangeInput" class="form-range" min="1" max="100" value="1" 
                                             oninput="show.value=rangeInput.value" name="_amount">
                                         </div>
                                         <label>수수료</label>
