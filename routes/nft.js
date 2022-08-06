@@ -74,8 +74,8 @@ router.post('/mint', (req, res) => {
     // 메타 데이터 JSON 화
     const metadataJSON = JSON.stringify(metadata);
     
-     // 간단하게 해쉬값 출력
-     const hash = (Math.random()).toString(32).split('.').pop();
+    // 간단하게 해쉬값 출력
+    const hash = (Math.random()).toString(32).split('.').pop();
 
     // JSON 저장 경로
     const aws = process.env.awsBucketUrl;

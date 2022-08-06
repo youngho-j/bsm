@@ -2,9 +2,10 @@ const router = require("express").Router();
 const conn = require("../database/mysql.js");
 const klaytn = require("../database/klaytn.js");
 const fetch = require('cross-fetch');
-const { json } = require("express");
 // env 파일을 읽기 위한 선언
 require("dotenv").config();
+
+// indexjs에서 user 경로로 들어올 경우 해당 js 파일로 전달됨
 
 // 지갑 klaytn address 생성
 router.get("/getWalletAddress", (req, res) => {
@@ -12,12 +13,13 @@ router.get("/getWalletAddress", (req, res) => {
     account = async() => {
         res.json(await klaytn.kasApi.kas.wallet.createAccount());
     }
-    account();
+    account()
+    .catch((error) => console.log("에러 : ", error));
 });
 
 // 회원 가입 페이지 이동 
 router.get("/signup", (req, res) => {
-    res.render("signup")
+    res.render("signup");
 });
 
 // 회원 가입 진행 
@@ -25,7 +27,8 @@ router.post("/signup", (req, res) => {
     let email = req.body._email;
     let pass = req.body._pass;
     let address = req.body._address;
-
+    let pubkey = req.body._public;
+    
     conn.query(
         `select * from user where email = ?`,
         [email],
@@ -38,8 +41,8 @@ router.post("/signup", (req, res) => {
                 // 조회시 값이 없는 경우 => 사용 가능한 이메일
                 if(result.length == 0) {
                     conn.query(
-                        `insert into user values (?, ?, ?)`,
-                        [email, pass, address],
+                        `insert into user(email, password, address, publicKey) values (?, ?, ?, ?)`,
+                        [email, pass, address, pubkey],
                         (err) => {
                             if(err) {
                                 console.log(err);
@@ -58,7 +61,51 @@ router.post("/signup", (req, res) => {
     )
 });
 
-// indexjs에서 user 경로로 들어올 경우 해당 js 파일로 전달됨
+// 로그인 페이지로 이동
+router.get("/signin", (req, res) => {
+    res.render("signin");
+});
+
+// 로그인 정보 확인 후 로그인
+router.post("/signin", (req, res) => {
+    const id = req.body._email;
+    const pass = req.body._pass;
+
+    conn.query(
+        `select * from user where email = ? and password = ?`,
+        [id, pass], 
+        (err, result) => {
+            if(err){
+                console.log(err);
+                res.send("SQL select error");
+            }else{
+                if(result.length > 0) {    
+                    // req.session.login = result[0]
+                    res.redirect("/");
+                }else{
+                    res.redirect("/user/signin");
+                }
+            }
+        }
+    )
+});
+
+router.get("/logout", (req, res) => {
+    // if(req.session.login) {
+    //     req.session.destroy(
+    //         function(err) {
+    //             if(err) {
+    //                 console.log(err);
+    //             } else {
+    //                 res.redirect("/signin");
+    //             }
+    //         }
+    //     )
+    // }
+    // 세션은 나중에 적용하기 로그아웃시 메인으로 이동
+    res.redirect("/");
+});
+
 // 해당 계정의 존재하는 모든 NFT JSON 값
 let mylistData = "";
 // 중복되는 tokenUri를 제거하기 위한 변수
@@ -87,14 +134,6 @@ router.get("/myPage", (req, res, next) => {
                 Object.assign(result.items[i], metaData);
             }
             mylistData = result;
-            // console.log(result.tokenUri);
-            // fetch(result.tokenUri)
-            //     .then(response => response.json())
-            //     .then(jsondata => {
-            //         console.log(jsondata)
-            //         mylistData = jsondata;
-            //     })
-            //     .catch(err => console.log("fetch error", err))
         } catch (error) {
             console.log("에러", error);
         }
@@ -103,7 +142,7 @@ router.get("/myPage", (req, res, next) => {
     getMyList();
     next();
     
-    // 최근 
+    // 최근 - api로 조회하는 법 
     // const contractAddress = "0x62530539bf64088e62aadbecd67fdb09ba157796";
     // const ownerAddress = "0x870b53fac31b735cb1f95D49e3E790144F2A6b78";
     // const getMyList = async () => {
@@ -125,22 +164,10 @@ router.get("/myPage", (req, res, next) => {
 // next()로 인해서 호출이 됨
 router.get("/myPage", (req, res, next) => {
 
-    console.log(`출력 : ${JSON.stringify(mylistData)}`);
-    console.log(`출력22 : ${mylistData}`);
+    // console.log(`출력 : ${JSON.stringify(mylistData)}`);
+    // console.log(`출력22 : ${mylistData}`);
     res.render("myPage", {"data" : mylistData});
 })
-
-router.get("/signin", (req, res) => {
-    res.render("signin")
-});
-
-router.post("/signin", (req, res) => {
-    res.sender("로그인 - 이후 필요정보 세션에 추가");
-});
-
-router.get("/logout", (req, res) => {
-    res.sender("로그 아웃 - 지갑 연동 해제");
-});
 
 // 해당 라우터 설정을 모듈로 빼주겠다.
 module.exports = router;

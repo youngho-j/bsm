@@ -1,4 +1,5 @@
 const express = require("express");
+const session = require("express-session");
 const app = express();
 const port = 3000;
 
@@ -11,6 +12,14 @@ app.set("view engine", "ejs");
 
 // 정적 파일 경로 설정 - public 폴더 아래에 js, css, img 폴더들
 app.use(express.static('public'));
+
+// session 세팅
+// app.use(session({
+//     httpOnly: true, 
+//     secret: process.env.secretkey,
+//     resave: false,
+//     saveUninitialized: true,
+// }));
 
 // post 형식의 데이터를 읽어 오기 위한 설정
 app.use(express.json());

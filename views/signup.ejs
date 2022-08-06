@@ -38,8 +38,9 @@
                                         <!-- kas 계좌 생성 필요 -->
                                         <label>Address</label>
                                         <div class="mb-3">
-                                            <input type="text" name="_address" id="walletAddress" class="form-control" placeholder="Address" required>
+                                            <input type="text" name="_address" id="walletAddress" class="form-control" placeholder="Address" readonly>
                                         </div>
+                                        <input type="hidden" name="_public" id="walletpubkey" class="form-control">
                                         <div class="text-center">
                                             <button type="button" id="create" class="btn bg-gradient-info w-100 mt-4 mb-0">계좌 생성</button>
                                         </div>
@@ -81,11 +82,11 @@
         let $signup = document.querySelector("#signup");
         let $create = document.querySelector("#create");
         let $walletAddress = document.querySelector("#walletAddress");
+        let $walletpubkey = document.querySelector("#walletpubkey");
 
         $signup.style.display = "none";
         
         $create.addEventListener("click", () => {
-            //alert("확인");
             fetch(`/user/getWalletAddress`).then((data) => {
                 const contentType = data.headers.get("content-type");
                 
@@ -98,7 +99,7 @@
             .then((json) => {
                 // NFT를 마켓에 올리기 위해 필요한 값을 다 가져와야함
                 $walletAddress.value = json.address;
-                $walletAddress.readOnly = true;
+                $walletpubkey.value = json.publicKey;
                 $signup.style.display = "";
                 $create.style.display = "none";
             })
