@@ -2,6 +2,7 @@ const router = require("express").Router();
 const conn = require("../database/mysql.js");
 const klaytn = require("../database/klaytn.js");
 const fetch = require('cross-fetch');
+const Crypto = require("crypto");
 // env 파일을 읽기 위한 선언
 require("dotenv").config();
 
@@ -29,6 +30,9 @@ router.post("/signup", (req, res) => {
     let address = req.body._address;
     let pubkey = req.body._public;
     
+    // 암호화
+    const crypto = Crypto.createHmac('sha256', process.env.cryptoSecretkey).update(pass).digest('hex');
+
     conn.query(
         `select * from user where email = ?`,
         [email],
@@ -42,7 +46,7 @@ router.post("/signup", (req, res) => {
                 if(result.length == 0) {
                     conn.query(
                         `insert into user(email, password, address, publicKey) values (?, ?, ?, ?)`,
-                        [email, pass, address, pubkey],
+                        [email, crypto, address, pubkey],
                         (err) => {
                             if(err) {
                                 console.log(err);
@@ -71,9 +75,11 @@ router.post("/signin", (req, res) => {
     const id = req.body._email;
     const pass = req.body._pass;
 
+    const crypto = Crypto.createHmac('sha256', process.env.cryptoSecretkey).update(pass).digest('hex');
+
     conn.query(
         `select * from user where email = ? and password = ?`,
-        [id, pass], 
+        [id, crypto], 
         (err, result) => {
             if(err){
                 console.log(err);
