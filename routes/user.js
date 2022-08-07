@@ -3,8 +3,20 @@ const conn = require("../database/mysql.js");
 const klaytn = require("../database/klaytn.js");
 const fetch = require('cross-fetch');
 const Crypto = require("crypto");
+const caverjs = require("caver-js");
+const contractEnv = require("../contract.json");
 // env 파일을 읽기 위한 선언
 require("dotenv").config();
+
+// caverjs를 이용하여 klaytn test net 접속을 위한 경로 설정
+const testConn = new caverjs("https://api.baobab.klaytn.net:8651");
+
+// 컨트랙 실행을 위한 abi 및 CA 등록 
+const smartContract = new testConn.klay.Contract(contractEnv.abi, contractEnv.ca);
+
+// 지갑 주소, 프라이빗 키 등록
+const account = testConn.klay.accounts.createWithAccountKey(process.env.mainWA, process.env.mainPK);
+testConn.klay.accounts.wallet.add(account);
 
 // indexjs에서 user 경로로 들어올 경우 해당 js 파일로 전달됨
 
@@ -112,68 +124,110 @@ router.get("/logout", (req, res) => {
     res.redirect("/");
 });
 
-// 해당 계정의 존재하는 모든 NFT JSON 값
-let mylistData = "";
+// 이전 마이페이지 코드
+// // 해당 계정의 존재하는 모든 NFT JSON 값
+// let mylistData = "";
+// // 중복되는 tokenUri를 제거하기 위한 변수
+// let tokenUri = "";
+// // tokenUri에 저장되어 있는 메타데이터 
+// let metaData = "";
+// // 얘는 그럼 ~/user/myPage 나머지도 방식은 같다.
+// router.get("/myPage", (req, res, next) => {
+//     const contractAddress = "0x62530539bf64088e62aadbecd67fdb09ba157796";
+//     const ownerAddress = "0x870b53fac31b735cb1f95D49e3E790144F2A6b78";
+    
+//     // EOA 계정 내 NFT 정보를 담은 json 리스트 합치기 
+//     const getMyList = async () => {
+//         try {
+//             const result = await caver.kas.tokenHistory.getNFTListByOwner(contractAddress, ownerAddress);
+//             for(let i = 0 ; i < result.items.length ; i++){
+//                 if(tokenUri != result.items[i].tokenUri) {
+//                     tokenUri = result.items[i].tokenUri;
+//                     fetch(tokenUri)
+//                         .then(response => response.json())
+//                         .then(jsondata => metaData = jsondata)
+//                         .catch(err => console.log("fetch error", err))
+//                 }
+//                 Object.assign(result.items[i], metaData);
+//             }
+//             mylistData = result;
+//         } catch (error) {
+//             console.log("에러", error);
+//         }
+//     }
+
+//     getMyList();
+//     next();
+    
+// });
+
+// // next()로 인해서 호출이 됨
+// router.get("/myPage", (req, res, next) => {
+//     // console.log(`출력 : ${JSON.stringify(mylistData)}`);
+//     // console.log(`출력22 : ${mylistData}`);
+//     res.render("myPage", {"data" : mylistData});
+// });
+
+// 해당 계정의 존재하는 모든 NFT JSON 배열 값
+let mylistData = [];
+// 해당 계정의 존재하는 모든 NFT 음악리스트 값
+let musiclist = [];
 // 중복되는 tokenUri를 제거하기 위한 변수
-let tokenUri = "";
+let data = "";
 // tokenUri에 저장되어 있는 메타데이터 
 let metaData = "";
 // 얘는 그럼 ~/user/myPage 나머지도 방식은 같다.
 router.get("/myPage", (req, res, next) => {
-    // const contractAddress = "0x62530539bf64088e62aadbecd67fdb09ba157796";
-    // const tokenId = "0";
-    const contractAddress = "0x62530539bf64088e62aadbecd67fdb09ba157796";
+    // 나중에 session에 있는 값을 가져오기 
     const ownerAddress = "0x870b53fac31b735cb1f95D49e3E790144F2A6b78";
-    // EOA 계정 NFT 리스트 통합하기 
+    
     const getMyList = async () => {
         try {
-            // let result = await caver.kas.tokenHistory.getNFT(contractAddress, tokenId);
-            const result = await caver.kas.tokenHistory.getNFTListByOwner(contractAddress, ownerAddress);
-            for(let i = 0 ; i < result.items.length ; i++){
-                if(tokenUri != result.items[i].tokenUri) {
-                    tokenUri = result.items[i].tokenUri;
-                    fetch(tokenUri)
-                        .then(response => response.json())
-                        .then(jsondata => metaData = jsondata)
-                        .catch(err => console.log("fetch error", err))
+            await smartContract.methods.updateMyNftList(ownerAddress)
+            .call()
+            .then((result) => data = result);
+            // console.log("전체 데이터 출력 확인 : ", data);
+
+            for(let i = 0 ; i < data.length ; i++) {
+                metaData = {
+                    TokenURI: `${data[i].TokenURI}`,
+                    ownedNumberOfNft: `${data[i].ownedNumberOfNft}`
                 }
-                Object.assign(result.items[i], metaData);
+                // console.log("json 형식 데이터 출력 확인 : ", metaData);
+                fetch(`${data[i].TokenURI}`)
+                .then(res => res.json())
+                .then((jsonData) => {
+                    // console.log("패치 출력 확인 1 : ", jsondata);
+                    // 패치를 통해 출력한 데이터 합치기
+                    Object.assign(jsonData, metaData);
+                    mylistData.push(jsonData);
+                    musiclist.push(`${jsonData.music}`);
+                })
+                .catch(err => console.log("fetch error", err))
+                
             }
-            mylistData = result;
+            // console.log("합친 데이터 출력 확인 : ", mylistData);
         } catch (error) {
             console.log("에러", error);
         }
     }
-
     getMyList();
     next();
-    
-    // 최근 - api로 조회하는 법 
-    // const contractAddress = "0x62530539bf64088e62aadbecd67fdb09ba157796";
-    // const ownerAddress = "0x870b53fac31b735cb1f95D49e3E790144F2A6b78";
-    // const getMyList = async () => {
-    //     try {
-    //         const result = await caver.kas.tokenHistory.getNFTListByOwner(
-    //             contractAddress,
-    //             ownerAddress,
-    //         );
-    //         console.log("결과", result)
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-
-    // }
-    // getMyList();
-    // res.render("myPage");
 });
 
 // next()로 인해서 호출이 됨
 router.get("/myPage", (req, res, next) => {
-
     // console.log(`출력 : ${JSON.stringify(mylistData)}`);
     // console.log(`출력22 : ${mylistData}`);
-    res.render("myPage", {"data" : mylistData});
-})
-
+    const data = mylistData;
+    const mList = musiclist;
+    // push를 통해 계속 누적이 되므로 변수에 저장후 초기화
+    mylistData = [];
+    musiclist = [];
+    res.render("myPage", {
+        "data" : data, 
+        "mList" : mList
+    });
+});
 // 해당 라우터 설정을 모듈로 빼주겠다.
 module.exports = router;

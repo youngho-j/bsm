@@ -7,6 +7,7 @@
         <title>Flowers Shop Ecommerce Website</title>
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
         <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.js"></script>
         <link href="https://demos.creative-tim.com/soft-ui-design-system/assets/css/nucleo-icons.css" rel="stylesheet" />
         <link href="https://demos.creative-tim.com/soft-ui-design-system/assets/css/nucleo-svg.css" rel="stylesheet" />
         <link rel="stylesheet" href="../css/theme.css">
@@ -23,17 +24,25 @@
                 <div class="row mb-4">
                     <!-- 상품 목록 제목-->
                     <div class="col-12 text-center">
-                        <h3 class="mb-5" spellcheck="false">My NFT</h3>
+                        <h3 id="player" class="mb-5" spellcheck="false">My NFT</h3>
+                    </div>
+                    <div class="col-12 text-center">
+                        <iframe src="" allow="autoplay" style="display: none;"></iframe>
+                        <audio autoplay loop controls>
+                            <% for(let j in mList){ %>
+                                <source src="<%=mList[j]%>" type="audio/mp3">
+                            <% } %>
+                        </audio>
                     </div>
                     <!-- 상품 카드 -->
-                    <% for(let i in data.items){ %>
+                    <% for(let i in data){ %>
                     <div class="col-lg-3 mb-lg-0 mb-4">
                         <div class="card border-dark">
                             <!-- 카드 이미지 영역-->
                             <div class="card-header p-0 mx-3 mt-3 position-relative z-index-1">
                                 <a href="javascript:;" class="d-block">               
                                     <!-- <img src="https://images.unsplash.com/photo-1548460464-2a68877c7a5f?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cm9zZXxlbnwwfDJ8MHx8&amp;auto=format&amp;fit=crop&amp;w=800&amp;q=60" class="img-fluid border-radius-lg shadow"> -->
-                                    <img src="<%=data.items[i].image%>" class="img-fluid border-radius-lg shadow" style="object-fit: cover;">
+                                    <img src="<%=data[i].image%>" class="img-fluid border-radius-lg shadow" style="object-fit: cover;">
                                 </a>
                             </div>
                             <!-- 카드 내용 영역-->
@@ -41,11 +50,11 @@
                                 <div class="d-flex align-items-center" style="width: 100%; display: block;">
                                     <div style="flex: 1;">
                                         <div style="display: flex; justify-content: space-between;">
-                                            <span class="card-subtitle"><%=data.items[i].attributes[1].value%></span>
-                                            <span class="card-subtitle"><%=data.items[i].attributes[0].value%></span>
+                                            <span class="card-subtitle"><%=data[i].attributes[1].value%></span>
+                                            <span class="card-subtitle"><%=data[i].attributes[0].value%></span>
                                         </div>
                                         <h4 class="card-title font-weight-bolder text-dark mb-4">
-                                            <%=data.items[i].name%>
+                                            <%=data[i].name%>
                                         </h4>
                                     </div>
                                 </div>
@@ -56,7 +65,7 @@
                                 <a href="javascript:;" class="btn btn-outline-dark mb-0">Sell</a>
                                 <div class="d-flex align-items-center mb-3">
                                     <span class="text-sm">
-                                        <%=data.items[i].description%>
+                                        <%=data[i].description%>
                                     </span>
                                 </div>
                             </div>
@@ -73,4 +82,18 @@
         <!-- footer 관련 페이지 / 각종 커뮤니티 아이콘  / 회사정보 / 페이지 / 팀 구성 / 자원 정보 등 -->
         <%- include('./common/footer')%>
     </body>
+    <!-- <script>
+        let _list = "<%=JSON.stringify(mList)%>";
+        _list.replaceAll('&#34', '\"');
+        let $player = document.querySelector("#player");
+        let sound = new Howl({
+            src: ['https://bsm-project.s3.ap-northeast-2.amazonaws.com/07g5lutuvl8_Billie+Eilish-01-wish+you+were+gay-wish+you+were+gay-192.mp3'],
+            volume: 1.0,
+        });
+        $player.addEventListener("click", () => {
+            new AudioContext().resume();
+            alert("누름");
+            sound.play();
+        });
+    </script> -->
 </html>
