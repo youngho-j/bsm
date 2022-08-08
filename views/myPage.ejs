@@ -26,14 +26,21 @@
                     <div class="col-12 text-center">
                         <h3 id="player" class="mb-5" spellcheck="false">My NFT</h3>
                     </div>
-                    <div class="col-12 text-center">
-                        <iframe src="" allow="autoplay" style="display: none;"></iframe>
-                        <audio autoplay loop controls>
-                            <% for(let j in mList){ %>
-                                <source src="<%=mList[j]%>" type="audio/mp3">
-                            <% } %>
-                        </audio>
-                    </div>
+                    <!-- 음악 목록이 있을 경우만 오디오 태그 생성 -->
+                    <% if(mList.length != 0) { %>
+                        <div class="col-12 text-center">
+                            <iframe src="../music/silence.mp3" allow="autoplay" style="display: none;"></iframe>
+                            <audio autoplay loop controls>
+                                <% for(let j in mList){ %>
+                                    <source src="<%=mList[j]%>" type="audio/mp3">
+                                <% } %>
+                            </audio>
+                        </div>
+                    <% } %>
+                    <!-- howler 시도 -->
+                    <!-- <div class="col-12 text-center">
+                        <button btn btn-outline-dark mb-0 onclick="openPlayer()">My Playlist</button>
+                    </div> -->
                     <!-- 상품 카드 -->
                     <% for(let i in data){ %>
                     <div class="col-lg-3 mb-lg-0 mb-4">
@@ -96,4 +103,10 @@
             sound.play();
         });
     </script> -->
+    <script>
+        // 새창 띄우기 
+        function openPlayer() {
+            window.open("/music/player");
+        }
+    </script>
 </html>

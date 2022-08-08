@@ -146,6 +146,7 @@ dist
 env.js
 
 # Contract 환경 변수 관리 json / abi, CA
-Contract.json
+contract.json
+testcontract.json
 
 # End of https://www.toptal.com/developers/gitignore/api/node

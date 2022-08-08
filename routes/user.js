@@ -187,7 +187,6 @@ router.get("/myPage", (req, res, next) => {
             .call()
             .then((result) => data = result);
             // console.log("전체 데이터 출력 확인 : ", data);
-
             for(let i = 0 ; i < data.length ; i++) {
                 metaData = {
                     TokenURI: `${data[i].TokenURI}`,
@@ -203,16 +202,16 @@ router.get("/myPage", (req, res, next) => {
                     mylistData.push(jsonData);
                     musiclist.push(`${jsonData.music}`);
                 })
-                .catch(err => console.log("fetch error", err))
-                
+                .catch(err => console.log("fetch error", err))    
             }
             // console.log("합친 데이터 출력 확인 : ", mylistData);
         } catch (error) {
             console.log("에러", error);
+        } finally {
+            next();
         }
     }
     getMyList();
-    next();
 });
 
 // next()로 인해서 호출이 됨
