@@ -5,7 +5,7 @@ const fetch = require('cross-fetch');
 const fs = require('fs');
 const caverjs = require("caver-js");
 const klaytn = require('../database/klaytn.js');
-const contractEnv = require("../contract.json");
+const contractEnv = require("../testcontract.json");
 require("dotenv").config();
 
 // caverjs를 이용하여 klaytn test net 접속을 위한 경로 설정

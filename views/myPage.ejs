@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -12,6 +11,7 @@
         <link href="https://demos.creative-tim.com/soft-ui-design-system/assets/css/nucleo-svg.css" rel="stylesheet" />
         <link rel="stylesheet" href="../css/theme.css">
         <link rel="stylesheet" href="../css/loopple/loopple.css">
+        <link rel="icon" href="../img/favicon_bsm.png">
     </head>
     <!-- data가 Object 타입으로 리턴.. JSON.stringify 사용시 문자열로 보여짐 / 아니면 for 문 사용할 것-->
     <body>
@@ -26,58 +26,55 @@
                     <div class="col-12 text-center">
                         <h3 id="player" class="mb-5" spellcheck="false">My NFT</h3>
                     </div>
-                    <!-- 음악 목록이 있을 경우만 오디오 태그 생성 -->
-                    <% if(mList.length != 0) { %>
-                        <div class="col-12 text-center">
-                            <iframe src="../music/silence.mp3" allow="autoplay" style="display: none;"></iframe>
-                            <audio autoplay loop controls>
-                                <% for(let j in mList){ %>
-                                    <source src="<%=mList[j]%>" type="audio/mp3">
-                                <% } %>
-                            </audio>
-                        </div>
-                    <% } %>
-                    <!-- howler 시도 -->
-                    <!-- <div class="col-12 text-center">
-                        <button btn btn-outline-dark mb-0 onclick="openPlayer()">My Playlist</button>
-                    </div> -->
-                    <!-- 상품 카드 -->
-                    <% for(let i in data){ %>
-                    <div class="col-lg-3 mb-lg-0 mb-4">
-                        <div class="card border-dark">
-                            <!-- 카드 이미지 영역-->
-                            <div class="card-header p-0 mx-3 mt-3 position-relative z-index-1">
-                                <a href="javascript:;" class="d-block">               
-                                    <!-- <img src="https://images.unsplash.com/photo-1548460464-2a68877c7a5f?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cm9zZXxlbnwwfDJ8MHx8&amp;auto=format&amp;fit=crop&amp;w=800&amp;q=60" class="img-fluid border-radius-lg shadow"> -->
-                                    <img src="<%=data[i].image%>" class="img-fluid border-radius-lg shadow" style="object-fit: cover;">
-                                </a>
+                    <% if(data != 'empty') { %>
+                        <!-- 음악 목록이 있을 경우만 오디오 태그 생성 -->
+                        <% if(mList.length != 0) { %>
+                            <div class="col-12 text-center">
+                                <iframe src="../music/silence.mp3" allow="autoplay" style="display: none;"></iframe>
+                                <audio id="myPlayer" onended="nextPlay()" autoplay controls>
+                                    <% for(let j in mList){ %>
+                                        <source src="<%=mList[j]%>" type="audio/mp3">
+                                    <% } %>
+                                </audio>
                             </div>
-                            <!-- 카드 내용 영역-->
-                            <div class="card-body pt-3">
-                                <div class="d-flex align-items-center" style="width: 100%; display: block;">
-                                    <div style="flex: 1;">
-                                        <div style="display: flex; justify-content: space-between;">
-                                            <span class="card-subtitle"><%=data[i].attributes[1].value%></span>
-                                            <span class="card-subtitle"><%=data[i].attributes[0].value%></span>
+                        <% } %>
+                        <!-- howler 시도 -->
+                        <!-- <div class="col-12 text-center">
+                            <button btn btn-outline-dark mb-0 onclick="openPlayer()">My Playlist</button>
+                        </div> -->
+                        <!-- 상품 카드 -->
+                        <% for(let i in data){ %>
+                        <div class="col-lg-3 mb-lg-0 mb-4">
+                            <div class="card border-dark">
+                                <!-- 카드 이미지 영역-->
+                                <div class="card-header p-0 mx-3 mt-3 position-relative z-index-1">
+                                    <a href="javascript:;" class="d-block">               
+                                        <!-- <img src="https://images.unsplash.com/photo-1548460464-2a68877c7a5f?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cm9zZXxlbnwwfDJ8MHx8&amp;auto=format&amp;fit=crop&amp;w=800&amp;q=60" class="img-fluid border-radius-lg shadow"> -->
+                                        <img src="<%=data[i].image%>" class="img-fluid border-radius-lg shadow" style="object-fit: cover;">
+                                    </a>
+                                </div>
+                                <!-- 카드 내용 영역-->
+                                <div class="card-body pt-3">
+                                    <div class="d-flex align-items-center" style="width: 100%; display: block;">
+                                        <div style="flex: 1;">
+                                            <div style="display: flex; justify-content: space-between;">
+                                                <span class="card-subtitle"><%=data[i].attributes[1].value%></span>
+                                                <span class="card-subtitle"><%=data[i].attributes[0].value%></span>
+                                            </div>
+                                            <h4 class="card-title font-weight-bolder text-dark mb-4">
+                                                <%=data[i].name%>
+                                            </h4>
                                         </div>
-                                        <h4 class="card-title font-weight-bolder text-dark mb-4">
-                                            <%=data[i].name%>
-                                        </h4>
                                     </div>
-                                </div>
-                                <div class="d-flex align-items-center mb-3">
-                                    <h5 class="mb-0 font-weight-bolder">$25.40</h5>
-                                    <h5 class="mb-0 opacity-4 text-sm ms-2"><strike>$29.00</strike></h5>
-                                </div>
-                                <a href="javascript:;" class="btn btn-outline-dark mb-0">Sell</a>
-                                <div class="d-flex align-items-center mb-3">
-                                    <span class="text-sm">
-                                        <%=data[i].description%>
-                                    </span>
+                                    <a href="javascript:;" class="btn btn-outline-dark mb-0">Sell</a>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                        <% } %>
+                    <% } else { %>
+                        <div>
+                            구매한 NFT가 존재하지 않습니다.
+                        </div>
                     <% } %>
                     <!-- <div class="col-12 mt-5 text-center">
                         <a href="javascript" class="btn bg-gradient-dark">View All</a>
@@ -105,8 +102,33 @@
     </script> -->
     <script>
         // 새창 띄우기 
-        function openPlayer() {
-            window.open("/music/player");
+        // function openPlayer() {
+        //     window.open("/music/player");
+        // }
+
+        // 현재 시작 곡 관리 변수
+        let start = 0;
+        
+        // 다음 곡 재생 함수
+        function nextPlay() {
+            const $myPlayer = document.querySelector("#myPlayer");
+
+            let $sourceList = $myPlayer.getElementsByTagName("source");
+            
+            // 전체 음원 목록 개수
+            let count = $sourceList.length;
+            
+            // 현재 곡을 다음 곡으로 변경
+            start++;
+            
+            // 모든 음원을 다 들었을 때 첫곡으로 변경
+            if(start == count) {
+                start = 0;
+            }
+
+            // 실행 음악 변경 후 실행
+            $myPlayer.src = $sourceList[start].src;
+            $myPlayer.play();
         }
     </script>
 </html>
