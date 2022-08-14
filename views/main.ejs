@@ -13,6 +13,7 @@
     <link href="https://demos.creative-tim.com/soft-ui-design-system/assets/css/nucleo-svg.css" rel="stylesheet" />
     <link rel="stylesheet" href="../css/theme.css">
     <link rel="stylesheet" href="../css/loopple/loopple.css">
+    <link rel="icon" href="../img/favicon_bsm.png">
     <script>
         function goListpage(){
             location.href="/nft/list"
@@ -24,7 +25,7 @@
     <!-- top nav / 로고, 페이지 이동 버튼 / 검색, 마이페이지 아이콘 / 로그인 버튼-->
     <%- include('./common/topNav.ejs')%>
     <!-- 메인 사진 및 우리 사업 장점-->
-    <header class="">
+    <header>
         <div class="page-header min-vh-75">
             <span class="mask bg-gradient-info opacity-4"></span>
             <div class="container">
@@ -52,9 +53,9 @@
             <div class="row bg-white shadow mt-n5 border-radius-lg pb-4 p-3 mx-sm-0 mx-1 position-relative z-index-2">
                 <div class="col-lg-3 col-sm-6 mt-2 mb-lg-0 mb-2">
                     <div class="d-flex align-items-center">
-                        <i class="fa fa-bus fa-2x text-dark" aria-hidden="true"></i>
+                        <i class="fa fa-search-plus fa-2x text-dark" aria-hidden="true"></i>
                         <div class="ms-3">
-                            <h6 class="mb-0">Free Shipping</h6>
+                            <h6 class="mb-0">Clean Transaction</h6>
                             <p class="text-sm mb-0">On order bigger than $50</p>
                         </div>
                     </div>
@@ -63,8 +64,8 @@
                     <div class="d-flex align-items-center">
                         <i class="fa fa-suitcase fa-2x text-dark" aria-hidden="true"></i>
                         <div class="ms-3">
-                            <h6 class="mb-0">15 Days Return</h6>
-                            <p class="text-sm mb-0">Moneyback guarantee</p>
+                            <h6 class="mb-0">Direct Sponsor</h6>
+                            <p class="text-sm mb-0">From Listener to Artist</p>
                         </div>
                     </div>
                 </div>
@@ -72,7 +73,7 @@
                     <div class="d-flex align-items-center">
                         <i class="fa fa-coins fa-2x text-dark" aria-hidden="true"></i>
                         <div class="ms-3">
-                            <h6 class="mb-0">Secure Checkout</h6>
+                            <h6 class="mb-0">Rational fee</h6>
                             <p class="text-sm mb-0">Secured by Stripe</p>
                         </div>
                     </div>
@@ -81,7 +82,7 @@
                     <div class="d-flex align-items-center">
                         <i class="fa fa-gift fa-2x text-dark" aria-hidden="true"></i>
                         <div class="ms-3">
-                            <h6 class="mb-0">Make Money</h6>
+                            <h6 class="mb-0">A variety of music</h6>
                             <p class="text-sm mb-0">Use our affiliate program</p>
                         </div>
                     </div>
@@ -96,357 +97,50 @@
             <div class="row mb-4">
                 <!-- 상품 목록 제목-->
                 <div class="col-12 text-center">
-                    <h3 class="mb-5" spellcheck="false">Deals of the Day</h3>
+                    <h3 class="mb-5" spellcheck="false">판매 중인 NFT 목록</h3>
                 </div>
-                <div class="col-lg-3 mb-lg-0 mb-4">
-                    <div class="card">
-                        <div class="card-header p-0 mx-3 mt-3 position-relative z-index-1">
-                            <a href="javascript:;" class="d-block">
-                                <img src="https://images.unsplash.com/photo-1548460464-2a68877c7a5f?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cm9zZXxlbnwwfDJ8MHx8&amp;auto=format&amp;fit=crop&amp;w=800&amp;q=60" class="img-fluid border-radius-lg shadow">
-                            </a>
-                        </div>
-
-                        <div class="card-body pt-3">
-                            <div class="d-flex align-items-center">
-                                <div>
-                                    <span class="text-sm">Flower</span>
-                                    <h4 class="card-description font-weight-bolder text-dark mb-4">
-                                        Rose
-                                    </h4>
-                                </div>
-                                <div class="ms-auto">
-                                    <a href="javascript:;" class="btn btn-link text-dark p-0">
-                                        <i class="fa fa-star text-lg" aria-hidden="true"></i>
-                                    </a>
-                                </div>
+                <% if(data != 'empty') { %>
+                    <!-- 상품 카드 -->
+                    <% for(let i in data){ %>
+                    <div class="col-lg-3 mb-lg-0 mb-4">
+                        <div class="card border-dark">
+                            <!-- 카드 이미지 영역-->
+                            <div class="card-header p-0 mx-3 mt-3 position-relative z-index-1">
+                                <a href="javascript:;" class="d-block">               
+                                    <img src="<%=data[i].image%>" class="img-fluid border-radius-lg shadow" style="object-fit: cover;">
+                                </a>
                             </div>
-                            <div class="d-flex align-items-center mb-3">
-                                <h5 class="mb-0 font-weight-bolder">$25.40</h5>
-                                <h5 class="mb-0 opacity-4 text-sm ms-2"><strike>$29.00</strike></h5>
+                            <!-- 카드 내용 영역-->
+                            <div class="card-body pt-3">
+                                <div class="d-flex align-items-center" style="width: 100%; display: block;">
+                                    <div style="flex: 1;">
+                                        <div style="display: flex; justify-content: space-between;">
+                                            <span class="card-subtitle"><%=data[i].attributes[1].value%></span>
+                                            <span class="card-subtitle"><%=data[i].attributes[0].value%></span>
+                                        </div>
+                                        <h4 class="card-title font-weight-bolder text-dark mb-4">
+                                            <%=data[i].name%>
+                                        </h4>
+                                    </div>
+                                </div>
+                                <a href="javascript:;" class="btn btn-outline-dark mb-0">Sell</a>
                             </div>
-                            <a href="javascript:;" class="btn btn-outline-dark mb-0">Add to cart</a>
-
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-3 mb-lg-0 mb-4">
-                    <div class="card">
-                        <div class="card-header p-0 mx-3 mt-3 position-relative z-index-1">
-                            <a href="javascript:;" class="d-block">
-                                <img src="https://images.unsplash.com/photo-1528475563668-e15742001b92?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=3280&amp;q=80" class="img-fluid border-radius-lg shadow">
-                            </a>
-                        </div>
-
-                        <div class="card-body pt-3">
-                            <div class="d-flex align-items-center">
-                                <div>
-                                    <span class="text-sm">Flower</span>
-                                    <h4 class="card-description font-weight-bolder text-dark mb-4">
-                                        Cactus</h4>
-                                </div>
-                                <div class="ms-auto">
-                                    <a href="javascript:;" class="btn btn-link text-dark p-0">
-                                        <i class="fa fa-star text-lg" aria-hidden="true"></i>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center mb-3">
-                                <h5 class="mb-0 font-weight-bolder">$19.00</h5>
-                                <h5 class="mb-0 opacity-4 text-sm ms-2"><strike>$29.00</strike></h5>
-                            </div>
-                            <a href="javascript:;" class="btn btn-outline-dark mb-0">Add to cart</a>
-
-                        </div>
+                    <% } %>
+                    <!-- 상품 목록 페이지로 이동 -->
+                    <div class="col-12 mt-5 text-center">
+                        <a href="/nft/list" class="btn bg-gradient-dark">View All</a>
                     </div>
-                </div>
-                <div class="col-lg-3 mb-lg-0 mb-4">
-                    <div class="card">
-                        <div class="card-header p-0 mx-3 mt-3 position-relative z-index-1">
-                            <a href="javascript:;" class="d-block">
-                                <img src="https://images.unsplash.com/photo-1589292514550-ffa367e28682?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxzZWFyY2h8MzN8fHR1bGlwfGVufDB8MnwwfHw%3D&amp;auto=format&amp;fit=crop&amp;w=800&amp;q=60" class="img-fluid border-radius-lg shadow">
-                            </a>
-                        </div>
-
-                        <div class="card-body pt-3">
-                            <div class="d-flex align-items-center">
-                                <div>
-                                    <span class="text-sm">Flower</span>
-                                    <h4 class="card-description font-weight-bolder text-dark mb-4">
-                                        Tulip</h4>
-                                </div>
-                                <div class="ms-auto">
-                                    <a href="javascript:;" class="btn btn-link text-dark p-0">
-                                        <i class="fa fa-star text-lg" aria-hidden="true"></i>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center mb-3">
-                                <h5 class="mb-0 font-weight-bolder">$9.90</h5>
-                                <h5 class="mb-0 opacity-4 text-sm ms-2"><strike>$15.00</strike></h5>
-                            </div>
-                            <a href="javascript:;" class="btn btn-outline-dark mb-0">Add to cart</a>
-
-                        </div>
+                <% } else { %>
+                    <div class="col-12 text-center">
+                        <h4 class="mb-5" spellcheck="false">등록된 NFT가 존재하지 않습니다.</h4>
                     </div>
-                </div>
-                <div class="col-lg-3 mb-lg-0 mb-4">
-                    <div class="card">
-                        <div class="card-header p-0 mx-3 mt-3 position-relative z-index-1">
-                            <a href="javascript:;" class="d-block">
-                                <img src="https://images.unsplash.com/photo-1502977249166-824b3a8a4d6d?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1180&amp;q=80" class="img-fluid border-radius-lg shadow">
-                            </a>
-                        </div>
-
-                        <div class="card-body pt-3">
-                            <div class="d-flex align-items-center">
-                                <div>
-                                    <span class="text-sm">Flower</span>
-                                    <h4 class="card-description font-weight-bolder text-dark mb-4">
-                                        Lily</h4>
-                                </div>
-                                <div class="ms-auto">
-                                    <a href="javascript:;" class="btn btn-link text-dark p-0">
-                                        <i class="fa fa-star text-lg" aria-hidden="true"></i>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center mb-3">
-                                <h5 class="mb-0 font-weight-bolder">$39.20</h5>
-                                <h5 class="mb-0 opacity-4 text-sm ms-2"><strike>$59.00</strike></h5>
-                            </div>
-                            <a href="javascript:;" class="btn btn-outline-dark mb-0">Add to cart</a>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 mt-5 text-center">
-                    <a href="/nft/list" class="btn bg-gradient-dark">View All</a>
-                </div>
+                <% } %>
             </div>
         </div>
     </section>
-    <!-- 사이트 간단 설명 / 검정 라인 (삭제)-->
-    <!--<section class="py-5 bg-gradient-dark">
-        <div class="container">
-            <div class="row text-center">
-                <div class="col-lg-3 col-md-6">
-                    <div class="info">
-                        <h3 class="mt-2 text-white">$600M + </h3>
-                        <p class="text-white">Transactional values</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="info">
-                        <h3 class="mt-2 text-white">3.000 + </h3>
-                        <p class="text-white">Products available</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="info">
-                        <h3 class="mt-2 text-white">8 + </h3>
-                        <p class="text-white">Years of experience</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="info">
-                        <h3 class="mt-2 text-white">99% </h3>
-                        <p class="text-white">Happy Clients</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section> 
-    -->
-
-    <!-- <section class="position-relative overflow-hidden py-5">
-        <div class="row">
-            <div class="col-lg-5">
-                <div class="bg-gradient-dark border-radius-lg d-flex align-items-center h-100 px-5 py-lg-0 py-5 mx-3">
-                    <div>
-                        <div class="icon icon-shape rounded-circle bg-white shadow text-center mb-4">
-                            <i class="fas opacity-10 fa-quote-right text-dark" aria-hidden="true"></i>
-                        </div>
-                        <h2 class="text-white"> What our Clients Are Saying</h2>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-7">
-                <div>
-                    <div id="carouselExampleIndicators" class="carousel slide pt-7 pb-11" data-bs-ride="carousel">
-                        <ol class="carousel-indicators pb-7">
-                            <a href="javascript:;">
-                                <img src="https://demos.creative-tim.com/soft-ui-design-system-pro/assets/img/team-4.jpg" alt="..." class="avatar avatar-sm avatar-scale-up shadow border-radius-lg border-0" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"> <span class="text-light mx-2">|</span>
-                            </a>
-
-                            <a href="javascript:;">
-                                <img src="https://demos.creative-tim.com/soft-ui-design-system-pro/assets/img/team-3.jpg" alt="..." class="avatar avatar-sm avatar-scale-up shadow border-radius-lg border-0" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"> <span class="text-light mx-2">|</span>
-                            </a>
-
-                            <a href="javascript:;">
-                                <img src="https://demos.creative-tim.com/soft-ui-design-system-pro/assets/img/team-2.jpg" alt="..." class="avatar avatar-sm avatar-scale-up shadow border-radius-lg border-0 active" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-current="true">
-                            </a>
-                        </ol>
-                        <div class="carousel-inner">
-                            <div class="carousel-item">
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col-lg-7 mx-auto text-center">
-                                            <img class="w-50 mb-4 avatar avatar-xl" src="https://demos.creative-tim.com/soft-ui-design-system-pro/assets/img/team-4.jpg" alt="">
-                                            <p class="lead">"We’re not always in the position that we want to be at. We’re constantly growing. We’re constantly making mistakes. We’re constantly trying to express ourselves and actualize our dreams." </p>
-                                            <div class="author justify-content-center">
-                                                <div class="name ps-2">
-                                                    <span>John Down</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="carousel-item">
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col-lg-7 mx-auto text-center">
-                                            <img class="w-50 mb-4 avatar avatar-xl" src="https://demos.creative-tim.com/soft-ui-design-system-pro/assets/img/team-3.jpg" alt="">
-                                            <p class="lead">"We’re not always in the position that we want to be at. We’re constantly growing. We’re constantly making mistakes. We’re constantly trying to express ourselves and actualize our dreams."</p>
-                                            <div class="author justify-content-center">
-                                                <div class="name ps-2">
-                                                    <span>Marcell Glock</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="carousel-item active">
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col-lg-7 mx-auto text-center">
-                                            <img class="w-50 mb-4 avatar avatar-xl" src="https://demos.creative-tim.com/soft-ui-design-system-pro/assets/img/team-2.jpg" alt="">
-                                            <p class="lead">"We’re not always in the position that we want to be at. We’re constantly growing. We’re constantly making mistakes. We’re constantly trying to express ourselves and actualize our dreams." </p>
-                                            <div class="author justify-content-center">
-                                                <div class="name ps-2">
-                                                    <span>Mathew Goat</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section> -->
-
-    <!-- 기사 글 목록 / 3개 넘어가면 자동으로 내려가는 것 확인(삭제)  -->
-    <!--<section class="pb-3">
-         글 목록 제목 
-        <div class="row">
-            <div class="col-6 text-center mx-auto mt-5 mb-0">
-                <h2>Read our Articles</h2>
-                <p>See what people from all around the world are saying about our website.
-                </p>
-            </div>
-        </div>
-    </section> 
-     게시글 목록 뒷 배경 
-    <section class="pb-6 bg-gray-100">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4 mb-lg-0 mb-4">
-                    <div class="card">
-                        <div class="card-header p-0 mx-3 mt-3 position-relative z-index-1">
-                            <a href="javascript:;" class="d-block">
-                                <img src="https://images.unsplash.com/photo-1488928741225-2aaf732c96cc?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1770&amp;q=80" class="img-fluid border-radius-lg">
-                            </a>
-                        </div>
-
-                        <div class="card-body pt-3">
-                            <span class="text-gradient text-warning text-uppercase text-xs font-weight-bold my-2">Flowers</span>
-                            <a href="javascript:;" class="card-title h5 d-block text-darker">Why we love tulips</a>
-                            <p class="card-description mb-4">
-                                Use border utilities to quickly style the border and border-radius of an element. Great for images, buttons.
-                            </p>
-                            <div class="author align-items-center">
-                                <img src="https://demos.creative-tim.com/soft-ui-design-system-pro/assets/img/team-2.jpg" alt="..." class="avatar shadow">
-                                <div class="name ps-3">
-                                    <span>Mathew Glock</span>
-                                    <div class="stats">
-                                        <small>Posted on 28 February</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 mb-lg-0 mb-4">
-                    <div class="card">
-                        <div class="card-header p-0 mx-3 mt-3 position-relative z-index-1">
-                            <a href="javascript:;" class="d-block">
-                                <img src="https://images.unsplash.com/photo-1460533893735-45cea2212645?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1856&amp;q=80" class="img-fluid border-radius-lg">
-                            </a>
-                        </div>
-
-                        <div class="card-body pt-3">
-                            <span class="text-gradient text-info text-uppercase text-xs font-weight-bold my-2">decor</span>
-                            <a href="javascript:;" class="text-darker card-title h5 d-block">Redecorate your house with green plants</a>
-                            <p class="card-description mb-4">
-                                Use border utilities to quickly style the border and border-radius of an element. Great for images, buttons.
-                            </p>
-                            <div class="author align-items-center">
-                                <img src="https://demos.creative-tim.com/soft-ui-design-system-pro/assets/img/ivana-square.jpg" alt="..." class="avatar shadow">
-                                <div class="name ps-3">
-                                    <span>Chriss Smahos</span>
-                                    <div class="stats">
-                                        <small>Posted 2 min ago</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 mb-lg-0 mb-4">
-                    <div class="card">
-                        <div class="card-header p-0 mx-3 mt-3 position-relative z-index-1">
-                            <a href="javascript:;" class="d-block">
-                                <img src="https://images.unsplash.com/photo-1509586069852-0674f4eb7826?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1770&amp;q=80" class="img-fluid border-radius-lg">
-                            </a>
-                        </div>
-
-                        <div class="card-body pt-3">
-                            <span class="text-gradient text-warning text-uppercase text-xs font-weight-bold my-2">Hub</span>
-                            <a href="javascript:;" class="text-darker card-title h5 d-block">Flowers for work environment</a>
-                            <p class="card-description mb-4">
-                                Use border utilities to quickly style the border and border-radius of an element. Great for images, buttons.
-                            </p>
-                            <div class="author align-items-center">
-                                <img src="https://demos.creative-tim.com/soft-ui-design-system-pro/assets/img/marie.jpg" alt="..." class="avatar shadow">
-                                <div class="name ps-3">
-                                    <span>Elijah Miller</span>
-                                    <div class="stats">
-                                        <small>Posted now</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>-->
-    <!-- <section class="mt-6 py-5 bg-gradient-dark position-relative" style="background-image:url(https://images.unsplash.com/photo-1516528387618-afa90b13e000?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1770&amp;q=80); background-size: cover; background-position: center center;">
-        <span class="mask bg-gradient-dark opacity-8"></span>
-        <div class="container position-relative z-index-2">
-            <div class="row">
-                <div class="col-md-7 mx-auto text-center">
-                    <h3 class="text-white mb-3" spellcheck="false">
-                        About Our Shop</h3>
-                    <p class="text-white">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to</p>
-                </div>
-            </div>
-        </div>
-    </section> -->
+    
     <!-- footer 관련 페이지 / 각종 커뮤니티 아이콘  / 회사정보 / 페이지 / 팀 구성 / 자원 정보 등 -->
     <%- include('./common/footer')%>
 </body>
