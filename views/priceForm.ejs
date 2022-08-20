@@ -10,6 +10,7 @@
         <link href="https://demos.creative-tim.com/soft-ui-design-system/assets/css/nucleo-svg.css" rel="stylesheet" />
         <link rel="stylesheet" href="../css/theme.css">
         <link rel="stylesheet" href="../css/loopple/loopple.css">
+        <link rel="icon" href="../img/favicon_bsm.png">
     </head>
     <body>
         <!-- top nav / 로고, 페이지 이동 버튼 / 검색, 마이페이지 아이콘 / 로그인 버튼-->
@@ -26,26 +27,37 @@
                                     <p class="mb-0">Enter your NFT sales information</p>
                                 </div>
                                 <div class="card-body pb-3">
-                                    <form>
+                                    <form action="/nft/transfer" method="post">
                                         <!-- nft 정보를 어떻게 할지 추가? -->
+                                        <div class="mb-3">
+                                            <img id="album-cover" class="form-control form-control-sm" src="<%=image%>"/>
+                                        </div>
+                                        <label>곡 이름</label>
+                                        <div class="mb-3">
+                                            <input type="text" class="form-control" aria-label="곡 이름" value="<%=title%>" readonly>
+                                        </div>
+                                        <label>가수</label>
+                                        <div class="mb-3">
+                                            <input type="text" class="form-control" aria-label="Artist" value="<%=artist%>" readonly>
+                                        </div>
                                         <label>
                                             NFT 판매 수량 &nbsp;
-                                            <output id="amount" name="amount" for="rangeInput"></output>
+                                            <output id="show" for="rangeInput"></output>
                                         </label>
                                         <!-- 범위를 해당 계좌에 가지고 있는 만큼만 설정되도록 해야함 / max 값을 받아와야함-->
                                         <div class="mb-3">
-                                            <input type="range" id="rangeInput" class="form-range" min="1" max="10000" oninput="amount.value=rangeInput.value">
+                                            <input type="range" id="rangeInput" class="form-range" 
+                                            min="1" max="<%=count%>" value="<%=count%>" 
+                                            oninput="show.value=rangeInput.value" name="count">
                                         </div>
                                         <label>판매 가격 설정</label>
                                         <div class="mb-3">
-                                            <input type="number" class="form-control" placeholder="판매 가격 입력" aria-label="가격">
+                                            <input type="number" class="form-control" name="price" placeholder="판매 가격 입력" aria-label="가격">
                                         </div>
-                                        <label>수수료</label>
-                                        <div class="mb-3">
-                                            <input type="text" class="form-control" placeholder="아티스트 명" aria-label="수수료" value="2.5 %" disabled>
-                                        </div>
+                                        <input type="hidden" class="form-control" name="owner" value="<%=owner%>">
+                                        <input type="hidden" class="form-control" name="tokenUri" value="<%=tokenUri%>">
                                         <div class="text-center">
-                                            <button type="button" class="btn bg-gradient-info w-100 mt-4 mb-0">Selling</button>
+                                            <button type="submit" class="btn bg-gradient-info w-100 mt-4 mb-0">판매 등록</button>
                                         </div>
                                     </form>
                                 </div>
